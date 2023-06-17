@@ -23,15 +23,7 @@ export const DashboardAccount = () => {
         >
           <CenterDashboard />
         </Flex>
-        <Flex
-          borderWidth={"1px"}
-          borderColor={"lightgray"}
-          borderRadius={"20px"}
-          w={"30%"}
-          justify={"center"}
-          mt={"10px"}
-          mr={"20px"}
-        >
+        <Flex w={"30%"} justify={"center"} mt={"10px"} mr={"20px"}>
           <RightSidebar />
         </Flex>
       </Flex>

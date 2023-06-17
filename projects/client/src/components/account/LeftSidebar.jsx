@@ -1,11 +1,37 @@
-import { Avatar, Flex, Icon, Stack, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Button,
+  Flex,
+  Icon,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Portal,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import React from "react";
 import { FaTwitter } from "react-icons/fa";
 import { CiUser, CiMail, CiBellOn, CiSettings, CiSearch } from "react-icons/ci";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../features/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export const LeftSidebar = () => {
   const { userName } = useSelector((state) => state.userSlice.value);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const onLogout = async () => {
+    try {
+      dispatch(logoutUser());
+      localStorage.removeItem("token");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <Stack pos={"relative"} left={"-50px"}>
@@ -30,7 +56,24 @@ export const LeftSidebar = () => {
           <Icon as={CiSettings} boxSize={"20px"} pos={"relative"} top={"8px"} />
           <Text fontSize={"2xl"}>Settings</Text>
         </Flex>
-        <Avatar name={userName}></Avatar>
+        <Popover>
+          <PopoverTrigger>
+            <Button variant={"unstyled"}>
+              <Avatar name={userName}></Avatar>
+            </Button>
+          </PopoverTrigger>
+          <Portal>
+            <PopoverContent>
+              <PopoverArrow />
+
+              {/* <PopoverBody> */}
+              <Button onClick={onLogout} w={"auto"} colorScheme="red">
+                Logout
+              </Button>
+              {/* </PopoverBody> */}
+            </PopoverContent>
+          </Portal>
+        </Popover>
       </Stack>
     </>
   );
