@@ -32,7 +32,6 @@ export const LoginButton = () => {
         password: inputPassword.current.value,
       };
       const result = await axios.post(`http://localhost:8000/user/login`, user);
-      console.log(result)
       dispatch(
         loginUser({
           userName: result.data.isAccountExist.userName,

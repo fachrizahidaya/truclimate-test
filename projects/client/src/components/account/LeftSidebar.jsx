@@ -5,7 +5,6 @@ import {
   Icon,
   Popover,
   PopoverArrow,
-  PopoverBody,
   PopoverContent,
   PopoverTrigger,
   Portal,
@@ -65,12 +64,9 @@ export const LeftSidebar = () => {
           <Portal>
             <PopoverContent>
               <PopoverArrow />
-
-              {/* <PopoverBody> */}
               <Button onClick={onLogout} w={"auto"} colorScheme="red">
                 Logout
               </Button>
-              {/* </PopoverBody> */}
             </PopoverContent>
           </Portal>
         </Popover>

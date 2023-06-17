@@ -1,4 +1,4 @@
-import { Heading, Stack, Text, Wrap } from "@chakra-ui/react";
+import { Stack, Wrap } from "@chakra-ui/react";
 import React from "react";
 import { SearchBar } from "./SearchBar";
 
