@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Card,
   CardBody,
@@ -8,41 +9,47 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 export const TweetCard = () => {
+  const [data, setData] = useState([]);
+  const tweetPost = async () => {
+    const result = await axios.get(`http://localhost:8000/user/list`);
+    setData(result.data);
+  };
+  console.log(data);
+
+  useEffect(() => {
+    tweetPost();
+  }, []);
+
   return (
     <>
-      <Card
-        mt={"10px"}
-        direction={{ base: "column", sm: "row" }}
-        overflow="hidden"
-        variant="outline"
-      >
-        <Image
-          objectFit="cover"
-          maxW={{ base: "100%", sm: "200px" }}
-          src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-          alt="Caffe Latte"
-        />
+      {data.map((item) => {
+        return (
+          <Card
+            mt={"10px"}
+            direction={{ base: "column", sm: "row" }}
+            overflow="hidden"
+            variant="outline"
+          >
+            <Avatar ml={"20px"} mt={"10px"} name={item?.User?.userName}></Avatar>
 
-        <Stack>
-          <CardBody>
-            <Heading size="md">The perfect latte</Heading>
+            <Stack>
+              <CardBody>
+                <Heading size="md">{item?.User?.userName}</Heading>
 
-            <Text py="2">
-              Caffè latte is a coffee beverage of Italian origin made with
-              espresso and steamed milk.
-            </Text>
-          </CardBody>
+                <Text py="2">
+                  {item?.content}
+                </Text>
+              </CardBody>
 
-          <CardFooter>
-            <Button variant="solid" colorScheme="blue">
-              Buy Latte
-            </Button>
-          </CardFooter>
-        </Stack>
-      </Card>
+              <CardFooter></CardFooter>
+            </Stack>
+          </Card>
+        );
+      })}
     </>
   );
 };
